@@ -1,4 +1,4 @@
-easywsclient
+easywsclient  20191101
 ============
 
 Easywsclient is an easy and powerful WebSocket client to get your
