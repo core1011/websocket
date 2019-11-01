@@ -35,7 +35,7 @@ int main()
     ws->send("goodbye");
     ws->send("hello");
     while (ws->getReadyState() != WebSocket::CLOSED) {
-      ws->poll();
+      ws->poll();//这个函数一定要在循环里调用，发送和接收都是基于这个函数进行异步处理的
       ws->dispatch(handle_message);
     }
     delete ws;
