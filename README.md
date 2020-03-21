@@ -97,6 +97,47 @@ main()
 }
 ```
 
+
+//线程thread  维护重连连接 open a thread to maintain connect statute
+void run()
+{
+    bool conn = FLASE;
+    ws = WebSocket::from_url("ws://localhost:8126/foo");
+   
+    //如果你需要多线程，可以在一个thread 维护该ws的连接重连机制
+    while (1) //判断ws是否正常连接
+    {
+      if(ws != NULL)
+      {
+          ws->poll(0);//这个必须要调用，否则不能发送，发送跟接收都是异步的，都是在这个poll函数里监测处    理的
+          ws->dispatch(handle_message);
+          if(ws->getReadyState() == WebSocket::CLOSED)  
+          {
+             //ws连接断开 重连
+             delete ws;
+             ws = NULL;
+             ws = WebSocket::from_url("ws://localhost:8126/foo");
+          }
+          else if(wss->getReadyState()== WebSocket::OPEN)
+          {
+             //ws连接ok
+             //    ws->send("goodbye");
+             ws->send("hello");
+          }
+          
+      }
+      else
+      {
+        ws = WebSocket::from_url("ws://localhost:8126/foo");
+        sleep(1);
+      }
+      usleep(100);
+    }
+    if(ws!=NULL)
+    delete ws;
+}
+
+
 Example
 =======
 

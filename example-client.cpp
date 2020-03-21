@@ -31,7 +31,7 @@ int main()
 #endif
 
     ws = WebSocket::from_url("ws://localhost:8126/foo");
-    assert(ws);
+    assert(ws); ////判断ws对象是否为空null ,当没有连接上的时候这个对象是NULL
     ws->send("goodbye");
     ws->send("hello");
     while (ws->getReadyState() != WebSocket::CLOSED) {
