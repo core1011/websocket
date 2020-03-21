@@ -98,6 +98,9 @@ main()
 ```
 
 
+
+
+
 //线程thread  维护重连连接 open a thread to maintain connect statute
 void run()
 {
